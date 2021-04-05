@@ -20,6 +20,22 @@ body{
     width: 80%;
 }
 
+#iniciar{
+    padding: 10px;
+    border: 2px solid white;
+    background-color: rgba(30, 2, 46, 0.979);
+    color: white;
+    cursor: pointer;
+    font-size: 19px;
+    border-radius: 30%;
+}
+
+#iniciar:hover{
+    background-color:white;
+    color: black;
+}
+
+
 .botones{
 width: 140px;
 height: 140px;
@@ -48,10 +64,11 @@ font-size: 22px;
 }
 
 #perdiste{
-background-image: url(https://i.gifer.com/Iq2Y.gif); 
+background-image: url(../img/GaveOver.gif); 
 background-repeat: no-repeat;
 background-size: cover;
 margin: 0px auto;
+margin-top: 10px;
 width: 900px;
 height: 400px;
 
