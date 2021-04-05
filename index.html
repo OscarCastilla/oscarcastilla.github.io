@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emojis</title>
+
+    <style>
+        header{
+            text-align: center;
+            display: flex;
+            justify-content: space-evenly;
+        }
+        header h3{
+           line-height: 40px;
+           font-size: 23px;  
+        }
+        body{
+            background-image: url(https://i.pinimg.com/originals/9d/43/9f/9d439f6476ea633d9ad1d03fb156e291.gif);
+            color: white;
+        }
+        .contenido{   
+            display: flex;
+            padding: 15px;
+        }
+        .contenido .controlador{
+            width: 80%;
+        }
+     
+      .botones{
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.541);
+        display: flex;
+        flex-wrap: wrap;
+        text-align: center;
+        margin-top: 370px;
+        border: .2px solid white;
+
+      }
+
+      .botones button{
+          margin: 6px;
+          align-self: center;
+          background-color: rgba(0, 0, 0, 0.356);
+          color:white;
+          font-size: 22px;
+     
+      }
+      footer{
+        margin: auto;
+        text-align: center;
+        font-size: 22px;
+      }
+
+      #perdiste{
+        background-image: url(https://i.gifer.com/Iq2Y.gif); 
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin: 0px auto;
+        width: 900px;
+        height: 400px;
+
+      }
+
+      #bienvenida{
+       
+        width: 700px;
+        height: 500px;   
+        margin-top: 50px;
+        display: flex;
+        flex-wrap: nowrap;
+        padding: 10px;
+        margin: 0px auto;
+        
+    
+      }
+
+      .about{
+        width: 40%;
+        text-align: center;
+        font-size: 20px;
+        line-height: 30px;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      
+      }     
+    </style>
+
+    <script>
+        
+    class Movimiento {
+        muevete() {
+        throw new Error("movimiento");
+        }
+    }
+
+    
+    class Coliccion {
+        choque() {
+        throw new Error("choque");
+        }
+    }
+    
+   /*esta es la clase vaca*/ 
+   class Vaca extends HTMLElement {
+      connectedCallback() {
+
+        this.innerHTML = "🐄";
+        this.style.position ="fixed";
+        this.style.fontSize ="3rem";
+      }
+
+      muevete(){
+       let x=Math.floor(Math.random() * (700-300)+300);
+       let y= Math.floor(Math.random() * (600-100)+100);
+      this.style.left =`${x}px`;
+      this.style.bottom =`${y}px`;
+      }
+
+      choque(e1, e2){
+        const rE1 =e1.getBoundingClientRect();
+        const rE2 =e2.getBoundingClientRect();         
+        return (rE1.right >= rE2.left &&
+          rE1.left <= rE2.right &&
+          rE1.top <= rE2.bottom &&
+          rE1.bottom >= rE2.top);
+          
+      }
+      }
+      customElements.define("vaca-web", Vaca);
+
+      /*la clase meteorito*/
+
+    class MeteoroWeb extends HTMLElement {
+      connectedCallback() {
+      
+        this.innerHTML = "🌑";
+        this.style.position ="fixed";
+        this.style.fontSize ="6rem";
+        this.velocidad=15;
+      
+        this.x = this.aleatorio(0,Math.floor(window.innerWidth));
+        this.y = this.aleatorio(0,Math.floor(window.innerHeight));
+
+      }
+      muevete(){
+        
+        this.style.right =`${this.x}px`;
+        this.style.top =`${this.y}px`;
+        this.x = (this.x +this.velocidad) %window.innerWidth;
+      } 
+
+      choque(e1, e2){
+        const rE1 =e1.getBoundingClientRect();
+        const rE2 =e2.getBoundingClientRect();
+        return (rE1.right >= rE2.left &&
+          rE1.left <= rE2.right &&
+          rE1.top <= rE2.bottom &&
+          rE1.bottom >= rE2.top);
+          
+      }
+
+      aleatorio(menor, mayor) {
+        return menor + Math.floor(
+          Math.random() *(mayor - menor + 1));
+      }
+
+
+    }
+    customElements.define("meteoro-web", MeteoroWeb);
+
+    class Estrella extends MeteoroWeb{
+        connectedCallback() {
+            
+            this.x = this.aleatorio(0,Math.floor(window.innerWidth));
+          this.y = this.aleatorio(0,Math.floor(window.innerHeight));
+          this.innerHTML = "🌠";
+          this.style.position ="fixed";
+          this.style.fontSize ="4rem";
+          this.style.left =`${this.x}px`;
+          this.style.top =`${this.y}px`;
+
+       } 
+
+  
+       muevete(){ this.y = (this.y + 10) %window.innerHeight;
+          this.style.top =`${this.y}px`;
+       }
+    }
+
+    customElements.define("meteoro2-web", Estrella);
+    
+
+    /*Nave */
+    class NaveWeb extends HTMLElement {
+        connectedCallback() {
+        this.yBase=window.innerHeight/1;
+      this.xMenor=window.innerWidth/5;
+      this.yBase=window.innerHeight/5;
+      this.xMenor=window.innerWidth/5;
+      this.xMayor=4*window.innerWidth/5;
+      this.yMayor= 5*window.innerHeight/6; 
+      this.x = this.xMenor;
+      this.y=this.yBase;
+
+        this.VELOCIDAD = 35;
+        this.innerHTML = "🛸";
+        this.style.position = "fixed";
+        this.style.fontSize = "4rem"; 
+        
+
+      }
+      dibuja(valor1,valor2){
+        this.style.left = `${valor1}px`;
+        this.style.bottom=`${valor2}px`;
+      }
+      avanza(){   
+      if (this.x< this.xMayor) {
+        this.x += this.VELOCIDAD;
+      }
+      this.dibuja(this.x,this.y);
+    }
+
+    retrocede() { 
+      if (this.x > this.xMenor) {
+        this.x -= this.VELOCIDAD;
+      }
+      this.dibuja(this.x,this.y);
+    }
+
+     arriba(){
+        if( this.y < this.yMayor){
+            this.y+=this.VELOCIDAD;       
+        }
+        this.dibuja(this.x,this.y);
+    }
+
+    abajo(){
+        if(this.y > this.yBase){
+            this.y-=this.VELOCIDAD; 
+        }
+        this.dibuja(this.x,this.y);
+    }
+    
+  }
+  customElements.define("nave-web", NaveWeb);
+    </script>
+
+</head>
+
+<body>
+    <div id="bienvenida">
+        <div class="img">
+            <img src="https://data.whicdn.com/images/273294840/original.gif" style="width: 70%; height: 500px;">
+        </div>
+        <div class="about" >
+          <h4>Bienvenido a UFO-VACAS</h4>
+          <p>Ayudanos abducir todas las vacas posibles y a consquistar el universo</p>
+          <p>Nota cuidado con el asteroide</p>
+    
+          <button id="iniciar">Abducir</button>
+        </div>
+    
+      </div>
+
+     <div id="perdiste" style="display: none;">
+        
+     </div> 
+    <header>
+        <h1>Jugador: <span id="nombre"></span></h1>
+        <h3>Puntaje: <span id="puntos">0</span></h3>
+    </header>
+<div class="contenido" style="display: none;" id="contenido">
+    <div class="botones" style="border: 4px dashed white;">
+        <p>
+            <button id="arriba">
+                🡹
+              </button>
+              <button id="abajo">
+                🡻
+              </button>
+            <button id="retrocede">
+                🡸
+            </button>
+            <button id="avanza">
+                🢂
+            </button>
+          </p>
+
+    </div>
+
+    <div class="controlador" id="controlador">
+        <controlador-web>
+           
+    
+        </controlador-web>
+    </div>
+
+</div> 
+
+    <footer>&COPY;Oscar Castilla Ponce</footer>
+
+
+    <script>
+
+        class Jugador{
+            constructor(nombre){
+                this.nombre=nombre;
+            }
+            puntaje(valor){
+                console.log(valor);
+                return valor;   
+            }
+        }
+
+        let inicio=document.getElementById("iniciar");
+
+        inicio.addEventListener('click',function(){
+        let menu=document.getElementById("bienvenida");
+        let contenido=document.getElementById("contenido");
+        menu.style.display="none";
+        console.log(contenido);
+        contenido.style.display="block";
+            
+        let res=document.getElementById("puntos");
+        let cuadron=document.getElementById("nombre");
+        let nombre=prompt("Ingresa tu nombre");
+        cuadron.innerHTML=nombre;
+        
+        console.log(puntos);
+       
+
+        j1= new Jugador(nombre);
+
+    
+    
+    let controlador=document.getElementById("controlador");
+      let arriba=document.getElementById("arriba");
+      let abajo=document.getElementById("abajo");
+      let avanza=document.getElementById("avanza");
+      let retrocede=document.getElementById("retrocede");
+      let perdiste=document.getElementById("perdiste");      
+      console.log(controlador);
+
+      class ControladorWeb extends HTMLElement {
+      connectedCallback() {
+        let vaca1 = new Vaca();
+        vaca1.muevete();
+        let nave= new NaveWeb();
+        controlador.append(vaca1);
+        controlador.append(nave);
+
+        /*Creamos los objetos meteoro y estrella*/
+
+        setInterval(function(){
+             let meteoro= new MeteoroWeb();
+             let estrella= new Estrella();
+            
+             console.log("hola");
+             setInterval(() => {
+                meteoro.muevete();
+                estrella.muevete();
+                if(estrella.choque(nave,estrella) || meteoro.choque(nave,meteoro)){
+                    console.log("chocaste");
+                    perdiste.style.display="block";
+                    controlador.style.display="none";
+                }}, 40);
+            controlador.append(meteoro);
+             controlador.append(estrella);
+             }, 6000);    
+  
+
+
+
+        /*Controlador de los botones de la nave*/
+        let puntos=0;
+
+        arriba.addEventListener('click',function(){
+          nave.arriba();
+          if(vaca1.choque(nave,vaca1)){
+              vaca1.muevete();
+              puntos+=5;
+              res.innerHTML= j1.puntaje(puntos);
+          }
+        });
+        abajo.addEventListener('click',function(){
+          nave.abajo();
+          if(vaca1.choque(nave,vaca1)){
+            vaca1.muevete();
+            puntos+=5;
+            res.innerHTML= j1.puntaje(puntos);
+          }
+        });
+        
+        avanza.addEventListener('click',function(){
+          nave.avanza();
+          if(vaca1.choque(nave,vaca1)){
+            vaca1.muevete();
+            puntos+=5;
+            res.innerHTML= j1.puntaje(puntos);
+            
+          }
+        });
+        
+        retrocede.addEventListener('click',function(){
+          nave.retrocede();
+          if(vaca1.choque(nave,vaca1)){
+            vaca1.muevete();
+            puntos+=5;
+            res.innerHTML= j1.puntaje(puntos);
+           
+          }
+        });
+
+      
+      }
+    }
+    customElements.define("controlador-web",ControladorWeb);
+
+        });
+    
+    </script>
+
+
+  </div>
+ 
+</body>
+</html>
