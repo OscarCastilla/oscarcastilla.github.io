@@ -21,6 +21,13 @@
         throw new Error("choque");
         }
     }
+
+
+    class aleatorio{
+        aleatorio(){
+          
+        }
+    }
     
    /*esta es la clase vaca*/ 
    class Vaca extends HTMLElement {
@@ -32,10 +39,10 @@
       }
 
       muevete(){
-       let x=Math.floor(Math.random() * (700-300)+300);
-       let y= Math.floor(Math.random() * (600-100)+100);
-      this.style.left =`${x}px`;
-      this.style.bottom =`${y}px`;
+        this.x=this.aleatorio(500,700);
+      this.style.left =`${this.x}px`;
+      this.y=this.aleatorio(600,100)
+      this.style.bottom =`${this.y}px`;
       }
 
       choque(e1, e2){
@@ -47,6 +54,13 @@
           rE1.bottom >= rE2.top);
           
       }
+
+      aleatorio(aleatorio1, aleatorio2) {
+        return aleatorio1 + Math.floor(Math.random() * (aleatorio2 - aleatorio1 + 1));
+      }
+
+
+
       }
       customElements.define("vaca-web", Vaca);
 
@@ -60,15 +74,14 @@
         this.style.fontSize ="6rem";
         this.velocidad=15;
       
-        this.x = this.aleatorio(0,Math.floor(window.innerWidth));
-        this.y = this.aleatorio(0,Math.floor(window.innerHeight));
+        this.x = 0;
+        this.y = this.aleatorio(10,Math.floor(window.innerHeight));
 
       }
       muevete(){
-        
         this.style.right =`${this.x}px`;
         this.style.top =`${this.y}px`;
-        this.x = (this.x +this.velocidad) %window.innerWidth;
+        this.x = (this.x +this.velocidad) %950;
       } 
 
       choque(e1, e2){
@@ -82,8 +95,7 @@
       }
 
       aleatorio(menor, mayor) {
-        return menor + Math.floor(
-          Math.random() *(mayor - menor + 1));
+        return menor + Math.floor(Math.random() *(mayor - menor + 1));
       }
 
 
@@ -93,7 +105,7 @@
     class Estrella extends MeteoroWeb{
         connectedCallback() {
             
-            this.x = this.aleatorio(0,Math.floor(window.innerWidth));
+            this.x = this.aleatorio(60,Math.floor(window.innerWidth));
           this.y = this.aleatorio(0,Math.floor(window.innerHeight));
           this.innerHTML = "🌠";
           this.style.position ="fixed";
@@ -104,7 +116,8 @@
        } 
 
   
-       muevete(){ this.y = (this.y + 10) %window.innerHeight;
+       muevete(){ 
+         this.y = (this.y + 10) %window.innerHeight;
           this.style.top =`${this.y}px`;
        }
     }
@@ -115,11 +128,10 @@
     /*Nave */
     class NaveWeb extends HTMLElement {
         connectedCallback() {
-        this.yBase=window.innerHeight/1;
-      this.xMenor=window.innerWidth/5;
-      this.yBase=window.innerHeight/5;
+        
       this.xMenor=window.innerWidth/5;
       this.xMayor=4*window.innerWidth/5;
+      this.yBase=window.innerHeight/5;
       this.yMayor= 5*window.innerHeight/6; 
       this.x = this.xMenor;
       this.y=this.yBase;
@@ -128,6 +140,8 @@
         this.innerHTML = "🛸";
         this.style.position = "fixed";
         this.style.fontSize = "4rem"; 
+        this.style.left = `${230}px`;
+        this.style.bottom=`${90}px`;
         
 
       }
@@ -192,7 +206,7 @@
         <h3>Puntaje: <span id="puntos">0</span></h3>
     </header>
 <div class="contenido" style="display: none;" id="contenido">
-    <div class="botones" style="border: 4px dashed white;">
+    <div class="botones" id="botones" style="border: 4px dashed white;">
         <p>
             <button id="arriba">
                 🡹
@@ -246,6 +260,7 @@
         let res=document.getElementById("puntos");
         let cuadron=document.getElementById("nombre");
         let nombre=prompt("Ingresa tu nombre");
+        let botones=document.getElementById("botones");
         cuadron.innerHTML=nombre;
         
         console.log(puntos);
@@ -285,6 +300,7 @@
                     console.log("chocaste");
                     perdiste.style.display="block";
                     controlador.style.display="none";
+                    botones.style.display="none";
                 }}, 40);
             controlador.append(meteoro);
              controlador.append(estrella);
