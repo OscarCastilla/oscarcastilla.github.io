@@ -105,7 +105,7 @@
     class Estrella extends MeteoroWeb{
         connectedCallback() {
             
-            this.x = this.aleatorio(110,Math.floor(window.innerWidth));
+            this.x = this.aleatorio(120,Math.floor(window.innerWidth));
           this.y = this.aleatorio(0,Math.floor(window.innerHeight));
           this.innerHTML = "🌠";
           this.style.position ="fixed";
@@ -184,9 +184,9 @@
 </head>
 
 <body onload="cargar()">
-     <div id="sonido"> </div>
+  <div id="sonido"> </div>
 
-    
+
     <div id="bienvenida">
         <div class="img">
             <img src="img/original.gif" style="width: 70%; height: 500px;">
@@ -240,14 +240,13 @@
 
 
     <script>
-        
-         function cargar(){
+
+
+      function cargar(){
         const sonido=document.getElementById("sonido");
         console.log(sonido);
         sonido.innerHTML=`<audio src="marciano.mp3" autoplay loop></audio>`;
       }
-
-        
 
         class Jugador{
             constructor(nombre){
